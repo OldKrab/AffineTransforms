@@ -4,7 +4,6 @@
 
 float Figure::angleProjection = 3.1415f/4;
 
-
 Figure::Figure(Matrix<float> dots) :dots(std::move(dots)), trans_(0, 0, 0), scale_(1, 1, 1), rotate_(0,0,0) {}
 
 void Figure::SetLine(size_t firstDotIndex, size_t secondDotIndex)
@@ -21,7 +20,6 @@ void Figure::AddScale(sf::Vector3f scale)
 {
 	scale_ += scale;
 }
-
 
 void Figure::AddTranslation(sf::Vector3f trans)
 {

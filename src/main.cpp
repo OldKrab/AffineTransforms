@@ -46,7 +46,7 @@ Figure ReadCustomFigure(sf::Vector3f& animatedScale)
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(800, 600), "Title");
+	sf::RenderWindow window(sf::VideoMode(800, 600), "Affine Transforms");
 	sf::Clock clock;
 	Vector3Animation anim;
 	sf::Vector3f animScaleCoefs, globalCenter = { 300, 300, 0 };
@@ -93,18 +93,18 @@ int main()
 			fig.AddScale(sf::Vector3f{ 0, 0, -2.f }*dt);
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-			fig.AddRotate(sf::Vector3f{ 0, 0, 2.f }*dt);
+			fig.AddRotate(sf::Vector3f{ -2.f, 0, 0 }*dt);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-			fig.AddRotate(sf::Vector3f{ 0, 0, -2.f }*dt);
+			fig.AddRotate(sf::Vector3f{ 2.f, 0, 0 }*dt);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 			fig.AddRotate(sf::Vector3f{ 0, 2.f, 0 }*dt);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			fig.AddRotate(sf::Vector3f{ 0, -2.f, 0 }*dt);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
-			fig.AddRotate(sf::Vector3f{ 2.f, 0, 0 }*dt);
+			fig.AddRotate(sf::Vector3f{ 0, 0, 2.f }*dt);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::RShift))
-			fig.AddRotate(sf::Vector3f{ -2.f, 0, 0 }*dt);
-
+			fig.AddRotate(sf::Vector3f{ 0, 0, -2.f }*dt);
+		
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
 			fig.ResetTransform();
 			axes.ResetTransform();
@@ -116,6 +116,7 @@ int main()
 				anim.Start(nextScale - currScale);
 			}
 		}
+		
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::J)) {
 			axes.AddRotate(sf::Vector3f{ 0, -2.f, 0 }*dt);
 			fig.AddRotate(sf::Vector3f{ 0, -2.f, 0 }*dt);
@@ -124,19 +125,19 @@ int main()
 			axes.AddRotate(sf::Vector3f{ 0, 2.f, 0 }*dt);
 			fig.AddRotate(sf::Vector3f{ 0, 2.f, 0 }*dt);
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::I)) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::U)) {
 			axes.AddRotate(sf::Vector3f{ 0, 0, 2.f }*dt);
 			fig.AddRotate(sf::Vector3f{ 0, 0, 2.f }*dt);
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::K)) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::O)) {
 			axes.AddRotate(sf::Vector3f{ 0, 0, -2.f }*dt);
 			fig.AddRotate(sf::Vector3f{ 0, 0, -2.f }*dt);
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::U)) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::I)) {
 			axes.AddRotate(sf::Vector3f{ 2.f, 0, 0 }*dt);
 			fig.AddRotate(sf::Vector3f{ 2.f, 0, 0 }*dt);
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::O)) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::K)) {
 			axes.AddRotate(sf::Vector3f{ -2.f, 0, 0 }*dt);
 			fig.AddRotate(sf::Vector3f{ -2.f, 0, 0 }*dt);
 		}
