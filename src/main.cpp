@@ -3,9 +3,9 @@
 
 #include "Matrix.h"
 #include "Vector3Animation.h"
-#include "Figure.h"
+#include "Figure/WireFigure.h"
 
-Figure InitAxes()
+WireFigure InitAxes()
 {
 	auto dots = Matrix<float>({
 		{0, 0, 0, 1},
@@ -13,7 +13,7 @@ Figure InitAxes()
 		{0, 2000, 0, 1},
 		{0, 0, 3000, 1} });
 
-	Figure axes(dots);
+	WireFigure axes(dots);
 	axes.SetLine(0, 1);
 	axes.SetLine(0, 2);
 	axes.SetLine(0, 3);
@@ -21,7 +21,7 @@ Figure InitAxes()
 	return axes;
 }
 
-Figure ReadCustomFigure(sf::Vector3f& animatedScale)
+WireFigure ReadCustomFigure(sf::Vector3f& animatedScale)
 {
 	std::ifstream fin("figure.txt");
 	std::vector<std::vector<float>> dots;
@@ -33,7 +33,7 @@ Figure ReadCustomFigure(sf::Vector3f& animatedScale)
 		fin >> x >> y >> z;
 		dots.push_back({ x,y,z,1 });
 	}
-	Figure fig(dots);
+	WireFigure fig(dots);
 	while (m--)
 	{
 		size_t first, second;
@@ -53,8 +53,6 @@ int main()
 
 	auto axes = InitAxes();
 	auto fig = ReadCustomFigure(animScaleCoefs);
-	axes.SetGlobalCenter(globalCenter);
-	fig.SetGlobalCenter(globalCenter);
 
 	while (window.isOpen())
 	{
@@ -63,47 +61,46 @@ int main()
 			if (event.type == sf::Event::Closed)
 				window.close();
 
-		auto dt = clock.getElapsedTime().asSeconds();
-		clock.restart();
+		auto dt = clock.restart().asSeconds();
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-			fig.AddTranslation(sf::Vector3f{ 0,100, 0 } *dt);
+			fig.Translate(sf::Vector3f{ 0,100, 0 } *dt);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-			fig.AddTranslation(sf::Vector3f{ 0,-100, 0 }*dt);
+			fig.Translate(sf::Vector3f{ 0,-100, 0 }*dt);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-			fig.AddTranslation(sf::Vector3f{ -100,0, 0 }*dt);
+			fig.Translate(sf::Vector3f{ -100,0, 0 }*dt);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-			fig.AddTranslation(sf::Vector3f{ 100,0, 0 }*dt);
+			fig.Translate(sf::Vector3f{ 100,0, 0 }*dt);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
-			fig.AddTranslation(sf::Vector3f{ 0,0, 100 }*dt);
+			fig.Translate(sf::Vector3f{ 0,0, 100 }*dt);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
-			fig.AddTranslation(sf::Vector3f{ 0,0, -100 }*dt);
+			fig.Translate(sf::Vector3f{ 0,0, -100 }*dt);
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8))
-			fig.AddScale(sf::Vector3f{ 0, 2.f, 0 }*dt);
+			fig.Scale(sf::Vector3f{ 0, 2.f, 0 }*dt);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2))
-			fig.AddScale(sf::Vector3f{ 0, -2.f, 0 }*dt);
+			fig.Scale(sf::Vector3f{ 0, -2.f, 0 }*dt);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4))
-			fig.AddScale(sf::Vector3f{ -2.f, 0, 0 }*dt);
+			fig.Scale(sf::Vector3f{ -2.f, 0, 0 }*dt);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6))
-			fig.AddScale(sf::Vector3f{ 2.f, 0, 0 }*dt);
+			fig.Scale(sf::Vector3f{ 2.f, 0, 0 }*dt);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad7))
-			fig.AddScale(sf::Vector3f{ 0, 0, 2.f }*dt);
+			fig.Scale(sf::Vector3f{ 0, 0, 2.f }*dt);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad9))
-			fig.AddScale(sf::Vector3f{ 0, 0, -2.f }*dt);
+			fig.Scale(sf::Vector3f{ 0, 0, -2.f }*dt);
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-			fig.AddRotate(sf::Vector3f{ -2.f, 0, 0 }*dt);
+			fig.Rotate(sf::Vector3f{ -2.f, 0, 0 }*dt);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-			fig.AddRotate(sf::Vector3f{ 2.f, 0, 0 }*dt);
+			fig.Rotate(sf::Vector3f{ 2.f, 0, 0 }*dt);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-			fig.AddRotate(sf::Vector3f{ 0, 2.f, 0 }*dt);
+			fig.Rotate(sf::Vector3f{ 0, 2.f, 0 }*dt);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-			fig.AddRotate(sf::Vector3f{ 0, -2.f, 0 }*dt);
+			fig.Rotate(sf::Vector3f{ 0, -2.f, 0 }*dt);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
-			fig.AddRotate(sf::Vector3f{ 0, 0, 2.f }*dt);
+			fig.Rotate(sf::Vector3f{ 0, 0, 2.f }*dt);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::RShift))
-			fig.AddRotate(sf::Vector3f{ 0, 0, -2.f }*dt);
+			fig.Rotate(sf::Vector3f{ 0, 0, -2.f }*dt);
 		
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
 			fig.ResetTransform();
@@ -117,36 +114,15 @@ int main()
 			}
 		}
 		
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::J)) {
-			axes.AddRotate(sf::Vector3f{ 0, -2.f, 0 }*dt);
-			fig.AddRotate(sf::Vector3f{ 0, -2.f, 0 }*dt);
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {
-			axes.AddRotate(sf::Vector3f{ 0, 2.f, 0 }*dt);
-			fig.AddRotate(sf::Vector3f{ 0, 2.f, 0 }*dt);
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::U)) {
-			axes.AddRotate(sf::Vector3f{ 0, 0, 2.f }*dt);
-			fig.AddRotate(sf::Vector3f{ 0, 0, 2.f }*dt);
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::O)) {
-			axes.AddRotate(sf::Vector3f{ 0, 0, -2.f }*dt);
-			fig.AddRotate(sf::Vector3f{ 0, 0, -2.f }*dt);
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::I)) {
-			axes.AddRotate(sf::Vector3f{ 2.f, 0, 0 }*dt);
-			fig.AddRotate(sf::Vector3f{ 2.f, 0, 0 }*dt);
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::K)) {
-			axes.AddRotate(sf::Vector3f{ -2.f, 0, 0 }*dt);
-			fig.AddRotate(sf::Vector3f{ -2.f, 0, 0 }*dt);
-		}
+
 		if (anim.IsStarted())
-			fig.AddScale(anim.GetProgress(dt));
-		
+			fig.Scale(anim.GetProgress(dt));
 		window.clear(sf::Color::Black);
-		window.draw(axes);
-		window.draw(fig);
+		Transform transform;
+		transform.Translate(globalCenter);
+		transform.ProjectOnXY();
+		axes.Draw(window, transform);
+		fig.Draw(window, transform);
 		window.display();
 	}
 }

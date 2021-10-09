@@ -3,15 +3,13 @@
 #include "BaseFigure.h"
 #include <SFML/Graphics.hpp>
 
-class Figure: public BaseFigure
+class WireFigure: public BaseFigure
 {
 public:
-	Figure(Matrix<float> dots);
+	WireFigure(Matrix<float> dots);
 	void SetLine(size_t firstDotIndex, size_t secondDotIndex);
 	Matrix<float> dots;
-	static float angleProjection;
-protected:
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+	void Draw(sf::RenderTarget& target, const Transform& trans = Transform()) const override;
 
 private:
 	std::vector<std::pair<size_t, size_t>> lines_;

@@ -1,6 +1,6 @@
 ﻿#include "AffineTransforms.h"
 
-Matrix<float>  AffineTransforms::Translation(const Matrix<float>& dots, sf::Vector3f tr)
+Matrix<float>  AffineTransforms::Translate(const Matrix<float>& dots, sf::Vector3f tr)
 {
 	Matrix<float> t({
 		{1,0,0,0},

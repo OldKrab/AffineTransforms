@@ -18,7 +18,7 @@
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\AffineTransforms.cpp">
+    <ClCompile Include="src\Figure\AffineTransforms.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Vector3Animation.cpp">
@@ -30,7 +30,19 @@
     <ClCompile Include="src\SceneHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Figure\Figure.cpp">
+    <ClCompile Include="src\Figure\WireFigure.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Figure\FigureList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Figure\IDrawable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Figure\Transform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Figure\ITransformable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,7 +50,7 @@
     <ClInclude Include="src\Matrix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\AffineTransforms.h">
+    <ClInclude Include="src\Figure\AffineTransforms.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Vector3Animation.h">
@@ -50,7 +62,19 @@
     <ClInclude Include="src\SceneHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Figure\Figure.h">
+    <ClInclude Include="src\Figure\WireFigure.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Figure\FigureList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Figure\IDrawable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Figure\Transform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Figure\ITransformable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

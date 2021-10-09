@@ -145,17 +145,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\AffineTransforms.cpp" />
-    <ClCompile Include="src\Figure\Figure.cpp" />
+    <ClCompile Include="src\Figure\AffineTransforms.cpp" />
+    <ClCompile Include="src\Figure\ITransformable.cpp" />
+    <ClCompile Include="src\Figure\WireFigure.cpp" />
     <ClCompile Include="src\Figure\BaseFigure.cpp" />
+    <ClCompile Include="src\Figure\FigureList.cpp" />
+    <ClCompile Include="src\Figure\IDrawable.cpp" />
+    <ClCompile Include="src\Figure\Transform.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\SceneHandler.cpp" />
     <ClCompile Include="src\Vector3Animation.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\AffineTransforms.h" />
-    <ClInclude Include="src\Figure\Figure.h" />
+    <ClInclude Include="src\Figure\AffineTransforms.h" />
+    <ClInclude Include="src\Figure\ITransformable.h" />
+    <ClInclude Include="src\Figure\WireFigure.h" />
     <ClInclude Include="src\Figure\BaseFigure.h" />
+    <ClInclude Include="src\Figure\FigureList.h" />
+    <ClInclude Include="src\Figure\IDrawable.h" />
+    <ClInclude Include="src\Figure\Transform.h" />
     <ClInclude Include="src\Matrix.h" />
     <ClInclude Include="src\SceneHandler.h" />
     <ClInclude Include="src\Vector3Animation.h" />
