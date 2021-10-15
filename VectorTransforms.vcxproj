@@ -147,26 +147,36 @@
   <ItemGroup>
     <ClCompile Include="src\Figure\AffineTransforms.cpp" />
     <ClCompile Include="src\Figure\ITransformable.cpp" />
+    <ClCompile Include="src\Figure\TriangleMeshFigure.cpp" />
     <ClCompile Include="src\Figure\WireFigure.cpp" />
     <ClCompile Include="src\Figure\BaseFigure.cpp" />
-    <ClCompile Include="src\Figure\FigureList.cpp" />
+    <ClCompile Include="src\Figure\TriangleMeshFigureList.cpp" />
     <ClCompile Include="src\Figure\IDrawable.cpp" />
     <ClCompile Include="src\Figure\Transform.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\SceneHandler.cpp" />
+    <ClCompile Include="src\Math\Plane.cpp" />
+    <ClCompile Include="src\Math\Triangle.cpp" />
+    <ClCompile Include="src\Math\VectorHelper.cpp" />
+    <ClCompile Include="src\Scene.cpp" />
     <ClCompile Include="src\Vector3Animation.cpp" />
+    <ClCompile Include="src\WarnockAlgorithm.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Figure\AffineTransforms.h" />
     <ClInclude Include="src\Figure\ITransformable.h" />
+    <ClInclude Include="src\Figure\TriangleMeshFigure.h" />
     <ClInclude Include="src\Figure\WireFigure.h" />
     <ClInclude Include="src\Figure\BaseFigure.h" />
-    <ClInclude Include="src\Figure\FigureList.h" />
+    <ClInclude Include="src\Figure\TriangleMeshFigureList.h" />
     <ClInclude Include="src\Figure\IDrawable.h" />
     <ClInclude Include="src\Figure\Transform.h" />
+    <ClInclude Include="src\Math\Plane.h" />
+    <ClInclude Include="src\Math\VectorHelper.h" />
     <ClInclude Include="src\Matrix.h" />
-    <ClInclude Include="src\SceneHandler.h" />
+    <ClInclude Include="src\Math\Triangle.h" />
+    <ClInclude Include="src\Scene.h" />
     <ClInclude Include="src\Vector3Animation.h" />
+    <ClInclude Include="src\WarnockAlgorithm.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="figure.txt" />

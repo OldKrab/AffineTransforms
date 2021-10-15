@@ -6,12 +6,13 @@
 class WireFigure: public BaseFigure
 {
 public:
+	WireFigure();
 	WireFigure(Matrix<float> dots);
 	void SetLine(size_t firstDotIndex, size_t secondDotIndex);
-	Matrix<float> dots;
 	void Draw(sf::RenderTarget& target, const Transform& trans = Transform()) const override;
 
 private:
+	Matrix<float> dots_;
 	std::vector<std::pair<size_t, size_t>> lines_;
 };
 

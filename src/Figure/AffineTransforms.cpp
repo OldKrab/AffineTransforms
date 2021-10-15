@@ -49,7 +49,7 @@ Matrix<float> AffineTransforms::ProjectionOnXY(const Matrix<float>& dots, float 
 	Matrix<float> p({
 		{1,0,0,0},
 		{0,1,0,0},
-		{alpha,beta,0,0},
+		{alpha,beta,1,0},
 		{0, 0, 0, 1} });
 	return dots * p;
 }

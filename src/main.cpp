@@ -2,28 +2,14 @@
 #include <SFML/Graphics.hpp>
 
 #include "Matrix.h"
+#include "Scene.h"
 #include "Vector3Animation.h"
+#include "Figure/TriangleMeshFigure.h"
 #include "Figure/WireFigure.h"
 
-WireFigure InitAxes()
+
+WireFigure ReadWireFigure(std::ifstream& fin, sf::Vector3f& animatedScale)
 {
-	auto dots = Matrix<float>({
-		{0, 0, 0, 1},
-		{2000, 0, 0, 1},
-		{0, 2000, 0, 1},
-		{0, 0, 3000, 1} });
-
-	WireFigure axes(dots);
-	axes.SetLine(0, 1);
-	axes.SetLine(0, 2);
-	axes.SetLine(0, 3);
-
-	return axes;
-}
-
-WireFigure ReadCustomFigure(sf::Vector3f& animatedScale)
-{
-	std::ifstream fin("figure.txt");
 	std::vector<std::vector<float>> dots;
 	int n, m;
 	fin >> n >> m;
@@ -44,16 +30,47 @@ WireFigure ReadCustomFigure(sf::Vector3f& animatedScale)
 	return fig;
 }
 
+TriangleMeshFigure ReadTriangleMeshFigure(std::ifstream& fin)
+{
+	std::vector<std::vector<float>> dots;
+	int n, m;
+	fin >> n >> m;
+	while (n--)
+	{
+		float x, y, z;
+		fin >> x >> y >> z;
+		dots.push_back({ x,y,z,1 });
+	}
+	TriangleMeshFigure fig(dots);
+	while (m--)
+	{
+		size_t first, second, third;
+		fin >> first >> second >> third;
+		fig.SetTriangle(first - 1, second - 1, third - 1);
+	}
+	int r, g, b;
+	fin >> r >> g >> b;
+	fig.SetColor(r, g, b);
+	return fig;
+}
+
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(800, 600), "Affine Transforms");
+	std::ifstream fin("figure.txt");
+	sf::RenderWindow window(sf::VideoMode(500, 500), "Hide invisible lines");
 	sf::Clock clock;
 	Vector3Animation anim;
-	sf::Vector3f animScaleCoefs, globalCenter = { 300, 300, 0 };
+	sf::Vector3f animScaleCoefs{ 1,1.2,1.2 },
+		XYZCenter = { static_cast<float>(window.getSize().x) / 3, static_cast<float>(window.getSize().y) / 2, 0 };
 
-	auto axes = InitAxes();
-	auto fig = ReadCustomFigure(animScaleCoefs);
+	Scene scene;
+	scene.SetScale({ 1,-1, 1 });
+	scene.Translate(XYZCenter);
 
+	scene.AddFigure(ReadTriangleMeshFigure(fin));
+	scene.AddFigure(ReadTriangleMeshFigure(fin));
+	
+	bool stepDraw = false;
 	while (window.isOpen())
 	{
 		sf::Event event{};
@@ -62,7 +79,7 @@ int main()
 				window.close();
 
 		auto dt = clock.restart().asSeconds();
-
+		auto& fig = scene.GetSelectedFigure();
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 			fig.Translate(sf::Vector3f{ 0,100, 0 } *dt);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
@@ -101,28 +118,48 @@ int main()
 			fig.Rotate(sf::Vector3f{ 0, 0, 2.f }*dt);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::RShift))
 			fig.Rotate(sf::Vector3f{ 0, 0, -2.f }*dt);
-		
+
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
+			scene.SelectFigure(0);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
+			scene.SelectFigure(1);
+
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-			fig.ResetTransform();
-			axes.ResetTransform();
+			scene.Reset();
+			scene.SetScale({ 1,-1, 1 });
+			scene.Translate(XYZCenter);
 		}
+
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::V)) {
+			stepDraw = true;
+		}
+
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
 			if (!anim.IsStarted()) {
-				auto currScale = fig.GetScale();
+				const auto& currScale = fig.GetScale();
 				auto nextScale = sf::Vector3f(currScale.x * animScaleCoefs.x, currScale.y * animScaleCoefs.y, currScale.z * animScaleCoefs.z);
 				anim.Start(nextScale - currScale);
 			}
 		}
-		
 
 		if (anim.IsStarted())
 			fig.Scale(anim.GetProgress(dt));
+
+
 		window.clear(sf::Color::Black);
 		Transform transform;
-		transform.Translate(globalCenter);
 		transform.ProjectOnXY();
-		axes.Draw(window, transform);
-		fig.Draw(window, transform);
+		if (stepDraw)
+		{
+			window.display();
+			scene.StepDraw(window, transform);
+			stepDraw = false;
+		}
+		else
+			scene.Draw(window, transform);
+
 		window.display();
 	}
 }

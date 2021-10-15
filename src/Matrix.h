@@ -10,13 +10,13 @@ public:
 	Matrix(size_t rowsCount, size_t colsCount)
 		:rowsCount_(rowsCount),
 		colsCount_(colsCount),
-		data_(rowsCount, std::vector<T>(colsCount))	{}
-	
+		data_(rowsCount, std::vector<T>(colsCount)) {}
+
 	Matrix(std::vector<std::vector<T>> data)
-	:rowsCount_(data.size()),
-	colsCount_(data.size() > 0? data[0].size() : 0),
-	data_(std::move(data)) {}
-	
+		:rowsCount_(data.size()),
+		colsCount_(data.size() > 0 ? data[0].size() : 0),
+		data_(std::move(data)) {}
+
 	Matrix() :Matrix(0, 0) {}
 
 	Matrix(const Matrix& other)
@@ -45,7 +45,7 @@ public:
 		std::swap(rowsCount_, other.rowsCount_);
 		std::swap(data_, other.data_);
 	}
-	
+
 	Matrix& operator=(Matrix other)
 	{
 		swap(other);
@@ -57,17 +57,20 @@ public:
 
 	const std::vector<T>& operator[](size_t i) const;
 
+	using DataT = std::vector<std::vector<T>>;
 	// Iterators methods
-	typename std::vector<std::vector<T>>::iterator begin() noexcept;
+	typename DataT::iterator begin() noexcept;
 
-	typename std::vector<std::vector<T>>::const_iterator begin() const noexcept;
+	typename DataT::const_iterator begin() const noexcept;
 
-	typename std::vector<std::vector<T>>::iterator end() noexcept;
+	typename DataT::iterator end() noexcept;
 
-	typename std::vector<std::vector<T>>::const_iterator end() const noexcept;
+	typename DataT::const_iterator end() const noexcept;
 
 	// math operations
 	Matrix operator*(const Matrix& other) const;
+
+	void InsertBack(const Matrix<T>& other);
 
 private:
 	size_t rowsCount_, colsCount_;
@@ -128,14 +131,21 @@ Matrix<T> Matrix<T>::operator*(const Matrix& other) const
 	return res;
 }
 
+template <class T>
+void Matrix<T>::InsertBack(const Matrix<T>& other)
+{
+	data_.insert(data_.end(), other.data_.begin(), other.data_.end());
+	rowsCount_ = data_.size();
+	colsCount_ = data_.size() > 0 ? data_[0].size() : 0;
+}
 
 
 template<class T>
-std::vector<T> operator+(const std::vector<T> &a, const std::vector<T> &b) {
-    std::vector<T> res = a;
-    for (int i = 0; i < a.size(); i++)
-        res[i] += b[i];
-    return res;
+std::vector<T> operator+(const std::vector<T>& a, const std::vector<T>& b) {
+	std::vector<T> res = a;
+	for (int i = 0; i < a.size(); i++)
+		res[i] += b[i];
+	return res;
 }
 
 // Input matrix from stream
